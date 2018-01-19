@@ -1,0 +1,19 @@
+{{#partial "content"}}
+    <form id="new-restaurant" method="post" action="/restaurants/new">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <label for="type">Type:</label>
+        <input id="type" name="type" type="text">
+        <label for="street">Street:</label>
+        <input id="street" name="street" type="text">
+        <label for="city">City:</label>
+        <input id="city" name="city" type="text">
+        <label for="state">State:</label>
+        <input id="state" name="state" type="text">
+        <label for="zip">Zip:</label>
+        <input id="zip" name="zip" type="text">
+        <button type="submit">Submit</button>
+    </form>
+{{/partial}}
+
+{{> layout.hbs}}

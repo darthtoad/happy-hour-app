@@ -1,0 +1,22 @@
+{{#partial "content"}}
+    {{#if restaurant}}
+        {{name}}
+        {{type}}
+        {{street}}
+        {{city}}
+        {{state}}
+        {{zip}}
+        <a href="/restaurants/update/{{id}}">Update Info</a>
+    {{/if}}
+
+    {{#if happyhours}}
+        {{#each happyhours}}
+            {{description}}
+            {{price}}
+            {{days}}
+            {{time}}
+        {{/each}}
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

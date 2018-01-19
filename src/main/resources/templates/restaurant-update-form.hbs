@@ -1,0 +1,19 @@
+{{#partial "content"}}
+    <form id="update-restaurant" method="post" action="restaurants/update/{{id}}">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{name}}">
+        <label for="type">Type:</label>
+        <input id="type" name="type" value="{{type}}" type="text">
+        <label for="street">Street:</label>
+        <input id="street" name="street" value="{{street}}" type="text">
+        <label for="city">City:</label>
+        <input id="city" name="city" value="{{city}}" type="text">
+        <label for="state">State:</label>
+        <input id="state" name="state" value="{{state}}" type="text">
+        <label for="zip">Zip:</label>
+        <input id="zip" name="zip" value="{{zip}}" type="text">
+        <button type="submit">Submit</button>
+    </form>
+{{/partial}}
+
+{{> layout.hbs}}

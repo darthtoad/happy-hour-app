@@ -1,0 +1,17 @@
+{{#partial "content"}}
+    <h1>Welcome to the Happy Hour Finder</h1>
+    <a href="/restaurants">See all establishments</a>
+    <a href="/restaurants/new">Add a new restaurant</a>
+    <a href="/restaurants/update">Change restaurant info</a>
+    <form id="city" action="restaurants/:city" method="get">
+        <label for="city">Search by city</label>
+        <input type="text" id="city" name="city">
+    </form>
+    <form id="delete" action="restaurants/:restaurantId/delete" method="get">
+        <label for="restaurantId">Delete a restuarant</label>
+        <input type="number" id="restaurantId" name="restaurantId">
+        <button type="submit"></button>
+    </form>
+{{/partial}}
+
+{{> layout.hbs}}
