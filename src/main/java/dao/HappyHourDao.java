@@ -12,9 +12,11 @@ public interface HappyHourDao {
 
     List<HappyHour> getAll();
 
+    List<HappyHour> findAllHappyHoursByRestaurantId (int restaurantId);
+
     HappyHour findById(int id);
 
-    void editHappyHour(String description, int price, String days, String time, int id);
+    void editHappyHour(String description, float price, String days, String time, int id);
 
     void deleteById(int id);
 

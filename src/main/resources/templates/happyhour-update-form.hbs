@@ -1,0 +1,19 @@
+{{#partial "content"}}
+    {{#if happyhours}}
+        <form id="edit-happyhour" method="post" action="/restaurants/{{restaurant.id}}/happyhours/update">
+            {{#each happyhours}}
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" value="{{description}}">
+                <label for="price">Price:</label>
+                <input id="price" name="price" type="number" step="0.01" value="{{price}}">
+                <label for="days">Days:</label>
+                <input id="days" name="days" type="text" value="{{days}}">
+                <label for="time">Time:</label>
+                <input id="time" name="time" type="time" value="{{time}}">
+            {{/each}}
+            <button type="submit">Submit</button>
+        </form>
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}

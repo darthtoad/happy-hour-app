@@ -1,12 +1,12 @@
 {{#partial "content"}}
     {{#if restaurant}}
-        {{name}}
-        {{type}}
-        {{street}}
-        {{city}}
-        {{state}}
-        {{zip}}
-        <a href="/restaurants/update/{{id}}">Update Info</a>
+        {{restaurant.name}}<br>
+        {{restaurant.type}}<br>
+        {{restaurant.street}}<br>
+        {{restaurant.city}}<br>
+        {{restaurant.state}}<br>
+        {{restaurant.zip}}<br>
+        <a href="/restaurants/{{restaurant.id}}/update">Update Info</a><br>
     {{/if}}
 
     {{#if happyhours}}
@@ -16,6 +16,7 @@
             {{days}}
             {{time}}
         {{/each}}
+        <a href="/restaurants/{{restaurant.id}}/happyhours/new">Create new happy hour</a>
     {{/if}}
 {{/partial}}
 

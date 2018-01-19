@@ -53,6 +53,27 @@ public class App {
             return new ModelAndView(model, "happyhour-form.hbs");
         }, new HandlebarsTemplateEngine());
 
+        get("/restaurants/:id/happyhours/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfRestaurantToFind = Integer.parseInt(request.params("id"));
+            Restaurant restaurant = restaurantDao.findById(idOfRestaurantToFind);
+            model.put("restaurant", restaurant);
+            return new ModelAndView(model, "happyhour-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        post("/restaurants/:id/happyhours/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            String description = request.queryParams("description");
+            float price = Float.parseFloat(request.queryParams("price"));
+            String days = request.queryParams("days");
+            String time = request.queryParams("time");
+            int restaurantId = Integer.parseInt(request.params("id"));
+            HappyHour newHappyHour = new HappyHour(description, price, days, time, restaurantId);
+            happyHourDao.add(newHappyHour);
+            model.put("happyhour", newHappyHour);
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
+
         get("/restaurants/:id", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfRestaurantToFind = Integer.parseInt(request.params("id"));
@@ -85,7 +106,7 @@ public class App {
             return new ModelAndView(model, "delete-success.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/restaurants/update/:id", (request, response) -> {
+        get("/restaurants/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int id = Integer.parseInt(request.params("id"));
             Restaurant restaurant = restaurantDao.findById(id);
@@ -93,7 +114,7 @@ public class App {
             return new ModelAndView(model, "restaurant-update-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/restaurants/update/:id", (request, response) -> {
+        post("/restaurants/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("name");
             String type = request.queryParams("type");
@@ -103,14 +124,16 @@ public class App {
             String zip = request.queryParams("zip");
             int id = Integer.parseInt(request.params("id"));
             restaurantDao.editRestaurant(name, type, street, city, state, zip, id);
-
+            model.put("happyhours", happyHourDao.findAllHappyHoursByRestaurantId(id));
+            Restaurant restaurant = restaurantDao.findById(id);
+            model.put("restaurant", restaurant);
             return new ModelAndView(model, "happyhour-update-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/happyhours/update/:id", (request, response) -> {
+        post("/restaurants/:id/happyhours/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             String description = request.queryParams("description");
-            int price = Integer.parseInt(request.queryParams("price"));
+            float price = Float.parseFloat(request.queryParams("price"));
             String days = request.queryParams("days");
             String time = request.queryParams("time");
             int idOfHappyHourToEdit = Integer.parseInt(request.params("id"));
@@ -118,18 +141,6 @@ public class App {
             return new ModelAndView(model, "update-success.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/restaurants/new/:id/happyhours/", (request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            String description = request.queryParams("description");
-            float price = Float.parseFloat(request.queryParams("price"));
-            String days = request.queryParams("days");
-            String time = request.queryParams("time");
-            int restaurantId = Integer.parseInt(request.params("id"));
-            HappyHour newHappyHour = new HappyHour(description, price, days, time, restaurantId);
-            happyHourDao.add(newHappyHour);
-            model.put("happyhour", newHappyHour);
-            return new ModelAndView(model, "success.hbs");
-        }, new HandlebarsTemplateEngine());
     }
 
 

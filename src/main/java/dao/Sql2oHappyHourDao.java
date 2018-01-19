@@ -22,14 +22,7 @@ public class Sql2oHappyHourDao implements HappyHourDao {
         String sql = "INSERT INTO happyhour (description, price, days, time, restaurantId) VALUES (:description, :price, :days, :time, :restaurantId)";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
-                    .addParameter("description", happyHour.getDescription())
-                    .addParameter("price", happyHour.getPrice())
-                    .addParameter("time", happyHour.getTime())
-                    .addParameter("restaurantId", happyHour.getRestaurantId())
-                    .addColumnMapping("DESCRIPTION", "description")
-                    .addColumnMapping("PRICE", "price")
-                    .addColumnMapping("TIME", "time")
-                    .addColumnMapping("RESTAURANTID", "restaurantId")
+                    .bind(happyHour)
                     .executeUpdate()
                     .getKey();
             happyHour.setId(id);
@@ -56,13 +49,24 @@ public class Sql2oHappyHourDao implements HappyHourDao {
     }
 
     @Override
-    public void editHappyHour(String description, int price, String days, String time, int id) {
+    public List<HappyHour> findAllHappyHoursByRestaurantId (int restaurantId) {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM happyhour WHERE restaurantId = :restaurantId")
+                    .addParameter("restaurantId", restaurantId)
+                    .executeAndFetch(HappyHour.class);
+        }
+    }
+
+    @Override
+    public void editHappyHour(String description, float price, String days, String time, int id) {
         String sql = "UPDATE happyhour SET description = :description, price = :price, days = :days, time = :time WHERE id = :id";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("description", description)
                     .addParameter("price", price)
+                    .addParameter("days", days)
                     .addParameter("time", time)
+                    .addParameter("id", id)
                     .executeUpdate();
 
         } catch (Sql2oException ex) {
